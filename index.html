@@ -1,12 +1,78 @@
-<html>
-    <head>
-        <title>Tic Tac Toe</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-500">
+  <div class="flex justify-center items-center min-h-screen">
+    <div class="grid grid-cols-3 gap-4">
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(0)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(1)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(2)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(3)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(4)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(5)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(6)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(7)"></div>
+      <div class="w-24 h-24 text-5xl font-mono border border-gray-400 bg-white rounded-xl flex items-center justify-center cursor-pointer" onclick="makeMove(8)"></div>
+    </div>
+  </div>
 
-    <body class="bg-gradient-to-r from-slate-800 to-black p-32">
-        <div class="w-full h-screen border rounded-2xl bg-blue-600">
-            
-        </div>
-    </body>
+  <script>
+    let currentPlayer = "X";
+    let board = ["", "", "", "", "", "", "", "", ""];
+
+    function makeMove(index) {
+      if (!board[index]) {
+        board[index] = currentPlayer;
+        document.getElementsByClassName("w-24 h-24")[index].innerText = currentPlayer;
+        checkWinner();
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+      }
+    }
+
+    function checkWinner() {
+      const winPatterns = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+
+      for (const pattern of winPatterns) {
+        const [a, b, c] = pattern;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          setTimeout(() => {
+            alert(`${board[a]} wins!`);
+            resetBoard();
+          }, 100);
+          return;
+        }
+      }
+
+      if (!board.includes("")) {
+        setTimeout(() => {
+          alert("It's a draw!");
+          resetBoard();
+        }, 100);
+      }
+    }
+
+    function resetBoard() {
+      board = ["", "", "", "", "", "", "", "", ""];
+      currentPlayer = "X";
+      const cells = document.getElementsByClassName("w-24 h-24");
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].innerText = "";
+      }
+    }
+  </script>
+</body>
 </html>
